@@ -1,0 +1,88 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 28.06.2021 14:55:08
+-- Design Name: 
+-- Module Name: code_memory_test - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity code_memory_test is
+  --Port (
+      
+end code_memory_test;
+
+architecture Behavioral of code_memory_test is
+component CHECK_CODE is 
+Port (
+        vecout : in std_logic_vector(0 to 51);
+        --clock  : in std_logic; 
+        CheckE : in std_logic;
+        reset : in std_logic;
+        resE : out std_logic;
+        result : out boolean )
+  ;
+  end component;
+  
+  signal vecout_i : std_logic_vector(0 to 51) := ( others => '0');
+  signal checkE_i : std_logic := '0';
+  signal reset_i : std_logic := '0';
+  signal resE_i : std_logic := '0';
+  signal result_i : boolean := false;
+  
+  
+begin
+
+mapage : CHECK_CODE 
+   port map ( 
+               vecout => vecout_i,
+               CheckE => CheckE_i,
+               reset => reset_i,
+               resE => resE_i,
+               result => result_i
+               );
+test : process 
+begin
+        reset_i <= '1';
+        wait for 5 ms;
+        reset_i <= '0';
+        CheckE_i <= '1';
+        wait for 5 ms;
+        CheckE_i <= '0';
+        wait for 10 ms;
+        vecout_i <= "0000000000000000000000000000000000000000000000000001";
+        CheckE_i <= '1';
+        wait for 10 ms;
+        CheckE_i <= '0';
+        wait for 10 ms;
+        vecout_i <= "0000000010000000000000000000000000000000000000000001";
+        CheckE_i <= '1';
+        wait for 10ms;
+        CheckE_i <= '0';
+        wait; 
+        end process; 
+end Behavioral;
